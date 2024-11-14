@@ -13,6 +13,7 @@ In this report, we’ll show the results in both a table and a chart. Using Quar
 ### 1. **Loading Necessary Libraries**
 
 ```{r}
+#| warning: false
 library(ggplot2)
 library(dplyr)
 library(knitr)
