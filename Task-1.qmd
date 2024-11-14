@@ -83,3 +83,36 @@ mean_displacement %>%
 -   `kable_styling()`: Adds style options like `striped` (alternating row colors), `hover` (highlight rows on hover), `condensed` (compact format), and `responsive` (adjusts size for different screen widths). `font_size` adjusts the table font size.
 
 This results in a nicely formatted table showing mean engine size by cylinder count.
+
+### 5. **Creating a Bar Chart**
+
+```{r}
+mean_displacement %>%
+  ggplot(aes(x = factor(cyl), y = mean_displacement, fill = factor(cyl))) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(
+    x = "Number of Cylinders",
+    y = "Engine Size (cm^3)",
+    title = "Mean Engine Size by Number of Cylinders"
+  ) 
+```
+
+-   **`mean_displacement %>%`**: Uses the `mean_displacement` data, which shows average engine sizes by cylinder count.
+
+-   **`ggplot(aes(x = factor(cyl), y = mean_displacement, fill = factor(cyl)))`**: Sets up the bar chart with the number of cylinders on the x-axis and average engine size on the y-axis, with each cylinder count shown in a different color.
+
+-   **`geom_bar(stat = "identity", show.legend = FALSE)`**: Creates bars with heights based on the actual average engine sizes and removes the legend.
+
+-   **`labs()`**: Adds labels to the x-axis, y-axis, and title for clarity.
+
+The chart shows that as the number of cylinders in a car's engine increases, the average engine size also increases:
+
+-   Cars with 4 cylinders have the smallest average engine size.
+
+-   Cars with 6 cylinders have a larger average engine size.
+
+-   Cars with 8 cylinders have the largest average engine size.
+
+### **Conclusion**
+
+This analysis suggests that cars with more cylinders generally have larger engines, supporting the idea that cylinder count is related to engine size. This result contradicts Big Dawg’s belief that more cylinders don’t necessarily mean a bigger engine.
