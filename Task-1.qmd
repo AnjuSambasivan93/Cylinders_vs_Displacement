@@ -1,0 +1,85 @@
+---
+title: "Comparison of Cylindar Count to Engine Displacement’"
+format: pdf
+editor: visual
+---
+
+## Introduction
+
+Our client, Big Dawg, wants to know if having more cylinders in a car’s engine actually means a larger engine size. He thinks that more cylinders don’t always lead to a bigger engine. To find out, we’ll use data from the `mtcars` dataset in R to check the average engine size (displacement) for cars with different numbers of cylinders.
+
+In this report, we’ll show the results in both a table and a chart. Using Quarto. This analysis will help Big Dawg see whether his belief about cylinders and engine size is accurate.
+
+### 1. **Loading Necessary Libraries**
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+```
+
+-   **ggplot2**: Used for creating the bar chart.
+
+-   **dplyr**: Used for data manipulation, particularly grouping and summarizing data.
+
+-   **knitr** and **kableExtra**: Used to create and style the table for displaying results.
+
+### 2. **Loading the `mtcars` Dataset**
+
+```{r}
+data(mtcars)
+head(mtcars)
+```
+
+```{r}
+colnames(mtcars)
+```
+
+The column names of the `mtcars` dataset that we want are as follows:
+
+1.  **mpg**: Miles per gallon (fuel efficiency)
+
+2.  **cyl**: Number of cylinders
+
+3.  **disp**: Engine size (displacement)
+
+### 3. **Calculating the Mean Engine Size by Cylinder Count**
+
+```{r}
+mean_displacement <- mtcars %>%
+  group_by(cyl) %>%
+  summarise(
+    mean_displacement = mean(disp, na.rm = TRUE)
+  ) %>%
+  arrange(cyl)
+
+```
+
+-   `group_by(cyl)`: Groups the data by the number of cylinders.
+
+-   `summarise(mean_displacement = mean(disp, na.rm = TRUE))`: Calculates the mean engine size (`disp`) for each group (cylinder count). The `na.rm = TRUE` argument ignores any missing values.
+
+-   `arrange(cyl)`: Orders the resulting data by cylinder count in ascending order.
+
+The result, `mean_displacement`, is showing the average engine size for each cylinder count.
+
+```{r}
+mean_displacement %>%
+  kable(
+    col.names = c("No. of Cylinders", " Mean Size"),
+    caption = "Mean Engine Size by Number of Cylinders"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    font_size = 12
+  )
+
+```
+
+-   `kable()`: Creates a basic table with `mean_displacement` data. The `col.names` argument customizes column names, and `caption` adds a title.
+
+-   `kable_styling()`: Adds style options like `striped` (alternating row colors), `hover` (highlight rows on hover), `condensed` (compact format), and `responsive` (adjusts size for different screen widths). `font_size` adjusts the table font size.
+
+This results in a nicely formatted table showing mean engine size by cylinder count.
